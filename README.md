@@ -1,2 +1,2 @@
-# Emotion-Recognition
+# Emotion Recognition
 Real-time facial emotion recognition
