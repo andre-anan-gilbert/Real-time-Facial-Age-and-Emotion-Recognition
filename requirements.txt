@@ -1,1 +1,9 @@
-tensorflow
+flake8
+jupyter
+matplotlib
+numpy
+opencv-contrib-python
+plotly
+seaborn
+tensorflow==2.5
+yapf
