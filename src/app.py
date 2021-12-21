@@ -13,6 +13,24 @@ class App:
         _emotion_recognition_model_filepath: The filepath to the tensorflow emotion model.
         _age_recognition_model_filepath: The filepath to the tensorflow age model.
     """
+    _EMOTIONS = [
+        'neutral',
+        'happy',
+        'surprised',
+        'sad',
+        'angry',
+        'disgusted',
+        'fearful',
+    ]
+
+    _AGE_LABELS = {
+        0: 'Child',
+        1: 'Young Adult',
+        2: 'Adult',
+        3: 'Senior',
+    }
+
+    _PRODUCT_RECOMMENDATIONS = {'(Child, happy)': '...'}
 
     def __init__(
         self,
@@ -52,12 +70,8 @@ class App:
 
                     i = int(confidence[0])
                     j = int(confidence[1])
-
-                    emotions = ['neutral', 'happy', 'surprised', 'sad', \
-                                'angry', 'disgusted', 'fearful']
-
-                    predicted_emotion_max = emotions[i]
-                    predicted_emotion_sec = emotions[j]
+                    predicted_emotion_max = self._EMOTIONS[i]
+                    predicted_emotion_sec = self._EMOTIONS[j]
                     text = [f'{predicted_emotion_max}: {predictions[0][i]*100:.2f} %']
 
                     if predictions[0][i] < 0.9:
