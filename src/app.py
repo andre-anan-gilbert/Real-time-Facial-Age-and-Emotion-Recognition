@@ -10,38 +10,17 @@ class App:
     """OpenCV Video App for facial age and emotion recognition.
 
     Attributes:
-        _emotion_recognition_model_filepath: The filepath to the tensorflow emotion model.
-        _age_recognition_model_filepath: The filepath to the tensorflow age model.
+        _age_classifier: The age classifier model.
+        _emotion_classifier: The emotion classifier model.
     """
-    _EMOTIONS = [
-        'neutral',
-        'happy',
-        'surprised',
-        'sad',
-        'angry',
-        'disgusted',
-        'fearful',
-    ]
 
-    _AGE_LABELS = {
-        0: 'Child',
-        1: 'Young Adult',
-        2: 'Adult',
-        3: 'Senior',
-    }
-
-    _PRODUCT_RECOMMENDATIONS = {'(Child, happy)': '...'}
-
-    def __init__(
-        self,
-        emotion_recognition_model_filepath: str,
-        age_recognition_model_filepath: str,
-    ) -> None:
+    def __init__(self, age_classifier_filepath: str, emotion_classifier_filepath: str) -> None:
         """Initialize the application."""
-        self._emotion_recognition_model = load_model(emotion_recognition_model_filepath)
-        self._age_recognition_model = load_model(age_recognition_model_filepath)
+        self._age_classifier = self._load_model(age_classifier_filepath)
+        self._emotion_classifier = self._load_model(emotion_classifier_filepath)
 
     def run(self) -> None:
+        """Runs the application."""
         cv2.ocl.setUseOpenCL(False)
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + \
                                              'haarcascade_frontalface_default.xml')
@@ -94,16 +73,37 @@ class App:
         capture.release()
         cv2.destroyAllWindows()
 
-    def _recognize_age(self, faces):
-        pass
+    def _load_model(self, filepath: str) -> None:
+        """Loads a tensorflow model."""
+        model = os.path.join(os.path.dirname(__file__), filepath)
+        return load_model(model)
 
-    def _recognize_emotion(self, faces):
-        pass
+    def _recognize_age(self, faces):
+        age_groups = {
+            0: 'Child',
+            1: 'Young Adult',
+            2: 'Adult',
+            3: 'Senior',
+        }
+
+    def _recognize_emotion(self, img_pixels):
+        emotions = ['neutral', 'happy', 'surprised', 'sad', 'angry', 'disgusted', 'fearful']
+
+        predictions = self._emotion_classifier.predict(img_pixels)
+        confidence = predictions[0].argsort()[-2:][::-1]
+        i = int(confidence[0])
+        j = int(confidence[1])
+        predicted_emotion_max = self._EMOTIONS[i]
+        predicted_emotion_sec = self._EMOTIONS[j]
+        text = [f'{predicted_emotion_max}: {predictions[0][i]*100:.2f} %']
+
+    def _recommend_product(self, faces):
+        product_table = {
+            '(Child, happy)': '...',
+        }
 
 
 # Example usage
 if __name__ == '__main__':
-    model_path = os.path.join(os.path.dirname(__file__), '../model/model_84_test_acc.h5')
-    print(model_path)
-    app = App(model_path, model_path)
-    app.run()
+    app = App(age_classifier_filepath='../model/emotion_classifier.h5',
+              emotion_classifier_filepath='../model/age_classifier.h5')
