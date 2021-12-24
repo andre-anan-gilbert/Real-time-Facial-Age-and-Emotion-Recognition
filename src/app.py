@@ -1,9 +1,12 @@
 """Real-time facial emotion detection."""
 import os
+from typing import Any
 
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
+
+from utils.classes import AgeGroups, Emotions, Products
 
 
 class App:
@@ -59,8 +62,7 @@ class App:
                     y0, dy = int(y) - 30, 30
                     for i, line in enumerate(text):
                         iy = y0 + i * dy
-                        cv2.putText(image, line, (int(x), iy), \
-                                    cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 171, 240), 2)
+                        cv2.putText(image, line, (int(x), iy), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 171, 240), 2)
 
                     resized_img = cv2.resize(image, (1000, 700))
             else:
@@ -73,34 +75,27 @@ class App:
         capture.release()
         cv2.destroyAllWindows()
 
-    def _load_model(self, filepath: str) -> None:
+    def _load_model(self, filepath: str) -> Any:
         """Loads a tensorflow model."""
         model = os.path.join(os.path.dirname(__file__), filepath)
         return load_model(model)
 
-    def _recognize_age(self, faces):
-        age_groups = {
-            0: 'Child',
-            1: 'Young Adult',
-            2: 'Adult',
-            3: 'Senior',
-        }
+    def _recognize_age(self, pixels):
+        """Recognizes the age group of a person given the pixels of an image."""
+        prediction = self._age_classifier.predict(pixels)
+        age_group = AgeGroups.TABLE[prediction]
+        return age_group
 
-    def _recognize_emotion(self, img_pixels):
-        emotions = ['neutral', 'happy', 'surprised', 'sad', 'angry', 'disgusted', 'fearful']
+    def _recognize_emotion(self, pixels):
+        """Recognizes the emotion of a person given the pixels of an image."""
+        prediction = self._emotion_classifier.predict(pixels)
+        emotion = Emotions.LIST[prediction]
+        return emotion
 
-        predictions = self._emotion_classifier.predict(img_pixels)
-        confidence = predictions[0].argsort()[-2:][::-1]
-        i = int(confidence[0])
-        j = int(confidence[1])
-        predicted_emotion_max = self._EMOTIONS[i]
-        predicted_emotion_sec = self._EMOTIONS[j]
-        text = [f'{predicted_emotion_max}: {predictions[0][i]*100:.2f} %']
-
-    def _recommend_product(self, faces):
-        product_table = {
-            '(Child, happy)': '...',
-        }
+    def _recommend_product(self, key: str) -> str:
+        """Recommends a product based on the age group and emotion of a person."""
+        recommendation = Products.TABLE[key]
+        return recommendation
 
 
 # Example usage
