@@ -39,37 +39,34 @@ class App:
             faces_detected = face_cascade.detectMultiScale(gray_image, 1.1, 6, minSize=(150, 150))
 
             if not isinstance(faces_detected, tuple):
-                for (x, y, w, h) in faces_detected:
-                    cv2.rectangle(image, (x, y), (x + w, y + h), (153, 153, 153), thickness=2)
-                    roi_gray = gray_image[y:y + w, x:x + h]
+                for (x, y, width, height) in faces_detected:
+                    cv2.rectangle(img=image,
+                                  pt1=(x, y),
+                                  pt2=(x + width, y + height),
+                                  color=(153, 153, 153),
+                                  thickness=2)
+
+                    roi_gray = gray_image[y:y + width, x:x + height]
                     roi_gray = cv2.resize(roi_gray, (48, 48))
-                    img_pixels = image.img_to_array(roi_gray)
-                    img_pixels = np.expand_dims(img_pixels, axis=0)
-                    img_pixels /= 255.0
+                    pixels = image.img_to_array(roi_gray)
+                    pixels = np.expand_dims(pixels, axis=0)
 
-                    predictions = self.__model.predict(img_pixels)
-                    confidence = predictions[0].argsort()[-2:][::-1]
+                    age_group = self._recognize_age_group(pixels)
+                    emotion = self._recognize_emotion(pixels)
+                    age_group_and_emotion = f'({age_group}, {emotion})'
+                    recommended_product = self._recommend_product(age_group_and_emotion)
 
-                    i = int(confidence[0])
-                    j = int(confidence[1])
-                    predicted_emotion_max = self._EMOTIONS[i]
-                    predicted_emotion_sec = self._EMOTIONS[j]
-                    text = [f'{predicted_emotion_max}: {predictions[0][i]*100:.2f} %']
+                    cv2.putText(img=image,
+                                text=recommended_product,
+                                org=(int(x), int(y)),
+                                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                fontScale=1,
+                                color=(0, 0, 255),
+                                thickness=2)
 
-                    if predictions[0][i] < 0.9:
-                        text.append(f'{predicted_emotion_sec}: {predictions[0][j]*100:.2f} %')
-
-                    y0, dy = int(y) - 30, 30
-                    for i, line in enumerate(text):
-                        iy = y0 + i * dy
-                        cv2.putText(image, line, (int(x), iy), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 171, 240), 2)
-
-                    resized_img = cv2.resize(image, (1000, 700))
-            else:
-                resized_img = cv2.resize(capture.read()[1], (1000, 700))
-
-            cv2.imshow('Facial Emotion Recognition', resized_img)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            resized_image = cv2.resize(image, (1000, 700))
+            cv2.imshow('Age Groupd and Emotion Recognition', resized_image)
+            if cv2.waitKey(10) == ord('q'):
                 break
 
         capture.release()
@@ -80,25 +77,29 @@ class App:
         model = os.path.join(os.path.dirname(__file__), filepath)
         return load_model(model)
 
-    def _recognize_age(self, pixels):
+    def _recognize_age_group(self, pixels: np.ndarray) -> str:
         """Recognizes the age group of a person given the pixels of an image."""
         prediction = self._age_classifier.predict(pixels)
         age_group = AgeGroups.TABLE[prediction]
         return age_group
 
-    def _recognize_emotion(self, pixels):
+    def _recognize_emotion(self, pixels: np.ndarray) -> str:
         """Recognizes the emotion of a person given the pixels of an image."""
-        prediction = self._emotion_classifier.predict(pixels)
-        emotion = Emotions.LIST[prediction]
+        predictions = self._emotion_classifier.predict(pixels)
+        max_index = np.argmax(predictions[0])
+        emotion = Emotions.LIST[max_index]
         return emotion
 
-    def _recommend_product(self, key: str) -> str:
+    def _recommend_product(self, age_group_and_emotion: str) -> str:
         """Recommends a product based on the age group and emotion of a person."""
-        recommendation = Products.TABLE[key]
+        recommendation = Products.TABLE[age_group_and_emotion]
         return recommendation
 
 
 # Example usage
 if __name__ == '__main__':
-    app = App(age_classifier_filepath='../model/emotion_classifier.h5',
-              emotion_classifier_filepath='../model/age_classifier.h5')
+    app = App(
+        age_classifier_filepath='../model/emotion_classifier.h5',
+        emotion_classifier_filepath='../model/age_classifier.h5',
+    )
+    app.run()
