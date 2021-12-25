@@ -65,7 +65,7 @@ class App:
                                 thickness=2)
 
             resized_image = cv2.resize(image, (1000, 700))
-            cv2.imshow('Age Groupd and Emotion Recognition', resized_image)
+            cv2.imshow('Age Group and Emotion Recognition', resized_image)
             if cv2.waitKey(10) == ord('q'):
                 break
 
