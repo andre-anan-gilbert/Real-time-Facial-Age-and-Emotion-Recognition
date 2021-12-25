@@ -1,10 +1,4 @@
-class Emotions:
-    """Class for the emotion classifier.
-
-    Attributes:
-        TABLE: Dictionary containing the age groups.
-    """
-    LIST = []
+"""Classes which can be predicted by the deep learning algorithms."""
 
 
 class AgeGroups:
@@ -19,6 +13,23 @@ class AgeGroups:
         2: 'Adult',
         3: 'Senior',
     }
+
+
+class Emotions:
+    """Class for the emotion classifier.
+
+    Attributes:
+        LIST: List containing the emotions.
+    """
+    LIST = [
+        'neutral',
+        'happy',
+        'surprised',
+        'sad',
+        'angry',
+        'disgusted',
+        'fearful',
+    ]
 
 
 class Products:
