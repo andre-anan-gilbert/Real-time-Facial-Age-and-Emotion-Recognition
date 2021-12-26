@@ -43,12 +43,13 @@ class Emotions:
     """
     LIST = [
         'neutral',
-        'happy',
-        'surprised',
-        'sad',
-        'angry',
-        'disgusted',
-        'fearful',
+        'happiness',
+        'surprise',
+        'sadness',
+        'anger',
+        'disgust',
+        'fear',
+        'contempt',
     ]
 
 
