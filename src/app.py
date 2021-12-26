@@ -119,7 +119,7 @@ class App:
 # Example usage
 if __name__ == '__main__':
     app = App(
-        age_classifier_filepath='../model/emotion_classifier.h5',
-        emotion_classifier_filepath='../model/age_classifier.h5',
+        age_classifier_filepath='../models/age_classifier.h5',
+        emotion_classifier_filepath='../models/emotion_classifier.h5',
     )
     app.run()
