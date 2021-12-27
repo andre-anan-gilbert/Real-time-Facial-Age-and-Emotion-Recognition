@@ -46,18 +46,14 @@ class App:
     def run(self) -> None:
         """Runs the application."""
         cv2.ocl.setUseOpenCL(False)
-
-        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + \
-                                             'haarcascade_frontalface_default.xml')
-
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         capture.set(cv2.CAP_PROP_BUFFERSIZE, 3)
 
         while True:
             retval, image = capture.read()
 
-            if not retval:
-                break
+            if not retval: break
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             faces_detected = face_cascade.detectMultiScale(gray_image, 1.1, 6, minSize=(150, 150))
 
