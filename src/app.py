@@ -75,7 +75,8 @@ class App:
                     age_group_and_emotion = f'({age_group}, {emotion})'
                     recommended_product = self._recommend_product(age_group_and_emotion)
 
-                    y0, dy = int(y) - 30, 20
+                    dy = 20
+                    y0 = int(y) - 30
                     for i, line in enumerate(recommended_product):
                         iy = y0 + i * dy
                         cv2.putText(img=image,
