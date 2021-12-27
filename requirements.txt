@@ -1,9 +1,7 @@
-flake8
 jupyter
 matplotlib
 numpy
 opencv-contrib-python
-plotly
 seaborn
 tensorflow==2.6
 yapf

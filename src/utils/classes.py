@@ -39,18 +39,17 @@ class Emotions:
     """Class for the emotion classifier.
 
     Attributes:
-        LIST: List containing the emotions.
+        TABLE: Dictionary containing the emotions.
     """
-    LIST = [
-        'neutral',
-        'happiness',
-        'surprise',
-        'sadness',
-        'anger',
-        'disgust',
-        'fear',
-        'contempt',
-    ]
+    TABLE = {
+        0: 'Neutral',
+        1: 'Happy',
+        2: 'Surprised',
+        3: 'Sad',
+        4: 'Angry',
+        5: 'Disgusted',
+        6: 'Fearful',
+    }
 
 
 class Products:
@@ -62,4 +61,5 @@ class Products:
     TABLE = {
         '(Child, Happy)': '...',
         '(Child, Neutral)': '...',
+        '(Child, Surprised)': '...',
     }
