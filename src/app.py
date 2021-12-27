@@ -113,7 +113,7 @@ class App:
         emotion = Emotions.TABLE[max_index]
         return emotion
 
-    def _recommend_product(self, age_group_and_emotion: str) -> str:
+    def _recommend_product(self, age_group_and_emotion: str) -> list[str, str]:
         """Recommends a product based on the age group and emotion of a person."""
         try:
             recommendation = Products.TABLE[age_group_and_emotion]
