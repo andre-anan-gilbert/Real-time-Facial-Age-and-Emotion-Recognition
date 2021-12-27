@@ -110,7 +110,7 @@ class App:
         """Recognizes the emotion of a person given the pixels of an image."""
         predictions = self._emotion_classifier.predict(pixels)
         max_index = np.argmax(predictions[0])
-        emotion = Emotions.LIST[max_index]
+        emotion = Emotions.TABLE[max_index]
         return emotion
 
     def _recommend_product(self, age_group_and_emotion: str) -> str:
