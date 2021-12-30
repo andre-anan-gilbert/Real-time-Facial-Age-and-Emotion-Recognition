@@ -7,10 +7,13 @@ Sad, Angry, Disgusted, Fearful) of a human, using convolutional neural networks 
 
 Age Group Recognition:
 - [facial age](https://www.kaggle.com/frabbisw/facial-age):
+An image dataset consisting human faces with ages.
 
 Emotion Recognition:
-- [fer2013](https://www.kaggle.com/deadskull7/fer2013)
-- [labels](https://github.com/microsoft/FERPlus/blob/master/fer2013new.csv)
+- [FER2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data):
+48 x 48 grayscale images of faces that are categorized in to one of the seven classes mentioned above.
+- [labels](https://github.com/microsoft/FERPlus/blob/master/fer2013new.csv):
+FER+ provides a set of new better quality ground truth labels for FER2013.
 ## Requirements
 
 - Python >= 3.9
