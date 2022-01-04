@@ -59,13 +59,13 @@ class Products:
         TABLE: Dictionary containing the products.
     """
     TABLE = {
-        '(Child, Happy)': '',
-        '(Child, Neutral)': '',
-        '(Child, Surprised)': '',
-        '(Child, Sad)': '',
-        '(Child, Angry)': '',
-        '(Child, Disgusted)': '',
-        '(Child, Fearful)': '',
+        '(Child, Happy)': 'No product defined.',
+        '(Child, Neutral)': 'No product defined.',
+        '(Child, Surprised)': 'No product defined.',
+        '(Child, Sad)': 'No product defined.',
+        '(Child, Angry)': 'No product defined.',
+        '(Child, Disgusted)': 'No product defined.',
+        '(Child, Fearful)': 'No product defined.',
         '(Young Adult, Happy)': '',
         '(Young Adult, Neutral)': '',
         '(Young Adult, Surprised)': '',

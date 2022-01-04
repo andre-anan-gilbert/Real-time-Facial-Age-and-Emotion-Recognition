@@ -116,10 +116,7 @@ class App:
 
     def _recommend_product(self, age_group_and_emotion: str) -> list[str, str]:
         """Recommends a product based on the age group and emotion of a person."""
-        try:
-            recommendation = Products.TABLE[age_group_and_emotion]
-        except KeyError:
-            recommendation = 'No product defined.'
+        recommendation = Products.TABLE[age_group_and_emotion]
         return [recommendation, age_group_and_emotion]
 
 
