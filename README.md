@@ -19,6 +19,11 @@ FER+ provides a set of new better quality ground truth labels for FER2013.
 - Python >= 3.9
 - See [requirements.txt](requirements.txt).
 
+To install the requirements:
+```
+pip install -r requirements.txt
+```
+
 ## Running the application
 ```
 python src/app.py
