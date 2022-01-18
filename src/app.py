@@ -59,22 +59,27 @@ class App:
 
             if not isinstance(faces_detected, tuple):
                 for (x, y, width, height) in faces_detected:
+
+                    # Draw rectangles around detected faces
                     cv2.rectangle(img=image,
                                   pt1=(x, y),
                                   pt2=(x + width, y + height),
                                   color=(153, 153, 153),
                                   thickness=1)
 
+                    # Image preprocessing
                     roi_gray = gray_image[y:y + width, x:x + height]
                     roi_gray = cv2.resize(roi_gray, (48, 48))
                     pixels = img_to_array(roi_gray)
                     pixels = np.expand_dims(pixels, axis=0)
 
+                    # Predictions
                     age_group = self._recognize_age_group(pixels)
                     emotion = self._recognize_emotion(pixels)
                     age_group_and_emotion = f'({age_group}, {emotion})'
                     recommended_product = self._recommend_product(age_group_and_emotion)
 
+                    # Display Predictions
                     dy = 20
                     y0 = int(y) - 30
                     for i, line in enumerate(recommended_product):
