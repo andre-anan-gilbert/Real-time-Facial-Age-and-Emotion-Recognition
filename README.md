@@ -29,18 +29,6 @@ pip install -r requirements.txt
 python src/app.py
 ```
 
-### Docker
-To build the image:
-```
-docker build -t name .
-```
-
-To run the container:
-```
-docker run -dp 3000:3000 name
-```
-
-
 ## License
 
 This repository is released under the
