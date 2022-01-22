@@ -72,6 +72,7 @@ class App:
                     roi_gray = cv2.resize(roi_gray, (48, 48))
                     pixels = img_to_array(roi_gray)
                     pixels = np.expand_dims(pixels, axis=0)
+                    pixels /= 255
 
                     # Get predictions
                     age_group = self._recognize_age_group(pixels)
