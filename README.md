@@ -30,9 +30,11 @@ To install the requirements:
 pip install -r requirements.txt
 ```
 
-These requirements are only used for the app as well as the notebooks [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb) and [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb). Since SHAP is not working with tensorflow >= 2.6, other requirements are used for [visualization.ipynb](/src/notebooks/visualization.ipynb).
+These requirements are only used for the app as well as the notebooks [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb) and [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb), all of which run using tensorflow 2.7, since they use the Rescaling layer, which was introduced in tensorflow 2.6.
 
-We do not recommend running [visualization.ipynb](/src/notebooks/visualization.ipynb), but if you have to do it, use the following instructions:
+Since [SHAP](https://github.com/slundberg/shap) is not working with tensorflow >= 2.6, and [visualkeras](https://github.com/paulgavrikov/visualkeras) requires additional Software, other requirements are used for [visualization.ipynb](/src/notebooks/visualization.ipynb). The Visualization notebook is only included for documentation purposes.
+
+For this reason, we do not recommend running [visualization.ipynb](/src/notebooks/visualization.ipynb), but if you have to do it, use the following instructions:
 
 ```
 pip install -r requirements_visualization.txt
@@ -44,7 +46,7 @@ On windows, the problem can be solved by installing [Microsoft C++ Build Tools](
 
 On Mac it should work similarly to Windows, although this is untested because of budget reasons.
 
-Since visualkeras is only relevant for the model architecture diagrams in the [visualization.ipynb](/src/notebooks/visualization.ipynb) another option would be to install all packages except aggdraw and visualkeras:
+Since visualkeras is only relevant for the model architecture diagrams in the [visualization.ipynb](/src/notebooks/visualization.ipynb), another option would be to install all packages except aggdraw and visualkeras:
 
 ```
 pip install $(grep -ivE "aggdraw|visualkeras" requirements_visualization.txt)
@@ -53,16 +55,19 @@ pip install $(grep -ivE "aggdraw|visualkeras" requirements_visualization.txt)
 This allows running the [visualization.ipynb](/src/notebooks/visualization.ipynb)-Notebook (for example for SHAP) by removing the following lines of code:
 
 ```
+# cell 1
 import visualkeras
 
+# cell 9
 visualkeras.layered_view(emotion_classifier,
-                         to_file='../../docs/emotion_classifier.png',
+                         to_file='../../docs/model_architecture/emotion_classifier.png',
                          legend=True,
                          font=font,
                          color_map=color_map)
 
+# cell 17
 visualkeras.layered_view(age_classifier,
-                         to_file='../../docs/age_classifier.png',
+                         to_file='../../docs/model_architecture/age_classifier.png',
                          legend=True,
                          font=font,
                          color_map=color_map)
