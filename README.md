@@ -33,6 +33,7 @@ pip install -r requirements.txt
 These requirements are used for the app, the following notebooks:
 - [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb)
 - [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb)
+
 which run using tensorflow 2.7, since they use the Rescaling layer, which was introduced in tensorflow 2.6.
 
 Since [SHAP](https://github.com/slundberg/shap) doesn't work with tensorflow >= 2.6, and [visualkeras](https://github.com/paulgavrikov/visualkeras) requires additional Software, other requirements are used for [visualization.ipynb](/src/notebooks/visualization.ipynb). The Visualization notebook is only included for documentation purposes.
