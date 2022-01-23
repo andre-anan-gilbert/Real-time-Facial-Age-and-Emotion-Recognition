@@ -30,21 +30,24 @@ To install the requirements:
 pip install -r requirements.txt
 ```
 
-These requirements are only used for the app as well as the notebooks [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb) and [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb), all of which run using tensorflow 2.7, since they use the Rescaling layer, which was introduced in tensorflow 2.6.
+These requirements are used for the app, the following notebooks:
+- [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb)
+- [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb)
+which run using tensorflow 2.7, since they use the Rescaling layer, which was introduced in tensorflow 2.6.
 
-Since [SHAP](https://github.com/slundberg/shap) is not working with tensorflow >= 2.6, and [visualkeras](https://github.com/paulgavrikov/visualkeras) requires additional Software, other requirements are used for [visualization.ipynb](/src/notebooks/visualization.ipynb). The Visualization notebook is only included for documentation purposes.
+Since [SHAP](https://github.com/slundberg/shap) doesn't work with tensorflow >= 2.6, and [visualkeras](https://github.com/paulgavrikov/visualkeras) requires additional Software, other requirements are used for [visualization.ipynb](/src/notebooks/visualization.ipynb). The Visualization notebook is only included for documentation purposes.
 
-For this reason, we do not recommend running [visualization.ipynb](/src/notebooks/visualization.ipynb), but if you have to do it, use the following instructions:
+For this reason, we do not recommend running [visualization.ipynb](/src/notebooks/visualization.ipynb), but if you want to, use the following instructions:
 
 ```
 pip install -r requirements_visualization.txt
 ```
 
-The installation of aggdraw (which is a dependency of visualkeras) might fail, please refer to the [repository of visualkeras](https://github.com/paulgavrikov/visualkeras#installing-aggdraw-fails) for a solution on linux.
+In case the installation of aggdraw (which is a dependency of visualkeras) fails, please refer to the [repository of visualkeras](https://github.com/paulgavrikov/visualkeras#installing-aggdraw-fails) for a solution on linux.
 
 On windows, the problem can be solved by installing [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). From the Visual Studio installer, please install Visual Studio Buildtools and the Desktop Development with C++ workload.
 
-On Mac it should work similarly to Windows, although this is untested because of budget reasons.
+On Mac it should work similarly to Windows (untested).
 
 Since visualkeras is only relevant for the model architecture diagrams in the [visualization.ipynb](/src/notebooks/visualization.ipynb), another option would be to install all packages except aggdraw and visualkeras:
 
@@ -73,17 +76,23 @@ visualkeras.layered_view(age_classifier,
                          color_map=color_map)
 ```
 
-## Running the application
+## Application
 
+To run the application:
 ```
 python src/app.py
 ```
 
+To stop the application:
+```
+press q
+```
+
 ## Notebooks
 
-- [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb) contains data preparation as well as implementation, training and performance evaluation of the Age Group Classifier
-- [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb) contains data preparation as well as implementation, training and performance evaluation of the Emotion Classifier
-- [visualization.ipynb](/src/notebooks/visualization.ipynb) contains visualization of model architecture with visualkeras and explainable AI with SHAP for both models
+- [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb) contains the data preparation, implementation, training and performance evaluation of the Age Group Classifier
+- [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb) contains the data preparation, implementation, training and performance evaluation of the Emotion Classifier
+- [visualization.ipynb](/src/notebooks/visualization.ipynb) contains the visualization of the model architecture with visualkeras and explainable AI with SHAP
 
 ## License
 
