@@ -38,15 +38,18 @@ class App:
         _emotion_classifier: The emotion classifier model.
     """
 
-    def __init__(self, age_classifier_filepath: str, emotion_classifier_filepath: str) -> None:
+    def __init__(self, age_classifier_filepath: str,
+                 emotion_classifier_filepath: str) -> None:
         """Initialize the application."""
         self._age_classifier = self._load_model(age_classifier_filepath)
-        self._emotion_classifier = self._load_model(emotion_classifier_filepath)
+        self._emotion_classifier = self._load_model(
+            emotion_classifier_filepath)
 
     def run(self) -> None:
         """Runs the application."""
         cv2.ocl.setUseOpenCL(False)
-        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+        face_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         capture.set(cv2.CAP_PROP_BUFFERSIZE, 3)
 
@@ -55,7 +58,10 @@ class App:
 
             if not retval: break
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            faces_detected = face_cascade.detectMultiScale(gray_image, 1.1, 6, minSize=(150, 150))
+            faces_detected = face_cascade.detectMultiScale(gray_image,
+                                                           1.1,
+                                                           6,
+                                                           minSize=(150, 150))
 
             if not isinstance(faces_detected, tuple):
                 for (x, y, width, height) in faces_detected:
@@ -77,7 +83,8 @@ class App:
                     age_group = self._recognize_age_group(pixels)
                     emotion = self._recognize_emotion(pixels)
                     age_group_and_emotion = f'({age_group}, {emotion})'
-                    recommended_product = self._recommend_product(age_group_and_emotion)
+                    recommended_product = self._recommend_product(
+                        age_group_and_emotion)
 
                     # Display Predictions
                     dy = 20
@@ -89,7 +96,7 @@ class App:
                                     org=(int(x), iy),
                                     fontFace=cv2.FONT_HERSHEY_DUPLEX,
                                     fontScale=0.7,
-                                    color=(3, 252, 15),
+                                    color=(0, 0, 0),
                                     thickness=1)
 
             resized_image = cv2.resize(image, (1000, 700))
