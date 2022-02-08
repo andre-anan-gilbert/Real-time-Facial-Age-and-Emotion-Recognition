@@ -1,4 +1,4 @@
-# Copyright 2021 The Emotion Recognition Authors. All rights reserved.
+# Copyright 2021 The Age Group and Emotion Recognition Authors. All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,10 @@
 """Real-time facial emotion detection."""
 import os
 from typing import Any
-
 import cv2
 import numpy as np
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array
-
+from tensorflow.keras import models
+from tensorflow.keras.preprocessing import image
 from utils.classes import AgeGroups, Emotions, Products
 
 
@@ -51,26 +49,28 @@ class App:
         capture.set(cv2.CAP_PROP_BUFFERSIZE, 3)
 
         while True:
-            retval, image = capture.read()
+            retval, img = capture.read()
 
             if not retval: break
-            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             faces_detected = face_cascade.detectMultiScale(gray_image, 1.1, 6, minSize=(150, 150))
 
             if not isinstance(faces_detected, tuple):
                 for (x, y, width, height) in faces_detected:
 
                     # Draw rectangles around detected faces
-                    cv2.rectangle(img=image,
-                                  pt1=(x, y),
-                                  pt2=(x + width, y + height),
-                                  color=(153, 153, 153),
-                                  thickness=1)
+                    cv2.rectangle(
+                        img=img,
+                        pt1=(x, y),
+                        pt2=(x + width, y + height),
+                        color=(153, 153, 153),
+                        thickness=1,
+                    )
 
                     # Image preprocessing
                     roi_gray = gray_image[y:y + width, x:x + height]
                     roi_gray = cv2.resize(roi_gray, (48, 48))
-                    pixels = img_to_array(roi_gray)
+                    pixels = image.img_to_array(roi_gray)
                     pixels = np.expand_dims(pixels, axis=0)
 
                     # Get predictions
@@ -84,15 +84,17 @@ class App:
                     y0 = int(y) - 30
                     for i, line in enumerate(recommended_product):
                         iy = y0 + i * dy
-                        cv2.putText(img=image,
-                                    text=line,
-                                    org=(int(x), iy),
-                                    fontFace=cv2.FONT_HERSHEY_DUPLEX,
-                                    fontScale=0.7,
-                                    color=(0, 0, 0),
-                                    thickness=1)
+                        cv2.putText(
+                            img=img,
+                            text=line,
+                            org=(int(x), iy),
+                            fontFace=cv2.FONT_HERSHEY_DUPLEX,
+                            fontScale=0.7,
+                            color=(0, 0, 0),
+                            thickness=1,
+                        )
 
-            resized_image = cv2.resize(image, (1000, 700))
+            resized_image = cv2.resize(img, (1000, 700))
             cv2.imshow('Age Group and Emotion Recognition', resized_image)
             if cv2.waitKey(1) == ord('q'):
                 break
@@ -103,7 +105,7 @@ class App:
     def _load_model(self, filepath: str) -> Any:
         """Loads a tensorflow model."""
         model = os.path.join(os.path.dirname(__file__), filepath)
-        return load_model(model)
+        return models.load_model(model)
 
     def _recognize_age_group(self, pixels: np.ndarray) -> str:
         """Recognizes the age group of a person given the pixels of an image."""
@@ -119,7 +121,7 @@ class App:
         emotion = Emotions.TABLE[max_index]
         return emotion
 
-    def _recommend_product(self, age_group_and_emotion: str) -> list[str, str]:
+    def _recommend_product(self, age_group_and_emotion: str) -> list[str]:
         """Recommends a product based on the age group and emotion of a person."""
         recommendation = Products.TABLE[age_group_and_emotion]
         return [recommendation, age_group_and_emotion]
