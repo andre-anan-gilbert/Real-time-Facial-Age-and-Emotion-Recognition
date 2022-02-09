@@ -22,7 +22,7 @@ Emotion Recognition:
 ## Requirements
 
 - Python 3.9
-- See [requirements.txt](requirements.txt).
+- View [requirements](requirements.txt).
 
 To install the requirements:
 
