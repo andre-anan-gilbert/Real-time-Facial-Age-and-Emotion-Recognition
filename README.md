@@ -77,7 +77,7 @@ visualkeras.layered_view(age_classifier,
                          color_map=color_map)
 ```
 
-## Application
+## Running the Application
 
 To run the application:
 ```
