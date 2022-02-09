@@ -15,14 +15,14 @@ Emotion Recognition:
 
 - [FER2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data):
   48 x 48 grayscale images of faces that are categorized in to one of the seven classes mentioned above.
-- [fer2013.csv](https://www.kaggle.com/deadskull7/fer2013): FER2013 with the images encoded in a CSV
+- [fer2013.csv](https://www.kaggle.com/deadskull7/fer2013): FER2013 with the images encoded in a CSV.
 - [labels](https://github.com/microsoft/FERPlus/blob/master/fer2013new.csv):
   FER+ provides a set of new better quality ground truth labels for FER2013.
 
 ## Requirements
 
 - Python 3.9
-- See [requirements](requirements.txt).
+- See [requirements](requirements.txt)
 
 To install the requirements:
 
