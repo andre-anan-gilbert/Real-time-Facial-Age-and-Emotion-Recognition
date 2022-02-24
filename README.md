@@ -4,6 +4,18 @@ This repository's goal is to demonstrate how to classify the age group
 (Child, Young Adult, Adult, Senior) and the emotion (Neutral, Happy, Surprised,
 Sad, Angry, Disgusted, Fearful) of a human, using convolutional neural networks (CNN).
 
+## Documentation
+
+- All project documentation can be found in the folder [docs](/docs/).
+- The unified documentation is found in the file [Projektdokumentation.pdf](/docs/Projektdokumentation.pdf).
+- Our suggested distribution of points can be found in [Gruppenbewertung.pdf](/docs/Gruppenbewertung.pdf).
+- The slides for all presentations were placed in the folder [slides](/docs/slides/).
+- All business related analysis documents and diagrams are located in [analysis](/docs/analysis/).
+- Technical analysis in form of UML diagrams can be found in the folder [diagrams](/docs/diagrams/).
+- The folder [app](/docs/app/) contains the description of the architecture of our application.
+- Visualizations of our models architecture and performance can be found in [models](/docs/models/).
+- The diagrams created with explainable AI are located in [explainable_ai](/docs/explainable_ai/).
+
 ## Datasets
 
 Age Group Recognition:
@@ -31,6 +43,7 @@ pip install -r requirements.txt
 ```
 
 These requirements are used for the app, the following notebooks:
+
 - [age_classifier.ipynb](/src/notebooks/age_classifier.ipynb)
 - [emotion_classifier.ipynb](/src/notebooks/emotion_classifier.ipynb)
 
@@ -80,11 +93,13 @@ visualkeras.layered_view(age_classifier,
 ## Running the Application
 
 To run the application:
+
 ```
 python src/app.py
 ```
 
 To stop the application:
+
 ```
 press q
 ```
